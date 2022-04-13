@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Array</title>
+</head>
+<body>
+    <h1>Check console</h1>
+    <h3>push</h3>
+    <h3>pop</h3>
+    <h3>last index</h3>
+    <h3>One line array</h3>
+    <h3>reverse</h3>
+    <h3>Stack length</h3>
+</body>
+</html>
+<script>
+
+    //for return Own Array function
+    // let a1= new Array("x","y","z");
+    // console.log("a1:",a1)
+
+
+    function myArray(){
+
+        // this function for make array loopable
+        Object.defineProperty(this,"length",{
+            value:0,
+            writable:true,
+            enumerable:false, //dont count length
+        })
+        //argument does not caught New so we need
+        //to use this in it for make object;
+        this.length =arguments.length;
+
+        for(let i=0;i<this.length;i++){
+            this[i] = arguments[i];
+        }
+    }
+    let arr=new myArray("x","y","z")
+
+
+
+    //1. own push function----->
+    myArray.prototype.push= function(value){
+        let index=this.length
+        this[index] = value;
+        this.length++;
+    }
+    arr.push("a");
+    arr.push("b");
+
+
+
+
+    //2. Own pop function----->
+    myArray.prototype.pop=function(){
+        let index=this.length-1;
+        delete this[index]
+        this.length--;
+    }
+    arr.pop()
+
+
+
+
+    //3. Own top index return function------>
+    myArray.prototype.top=function(){
+        let last=this.length-1
+        return(this[last])
+    }
+    console.log("Last index:",arr.top())
+
+
+
+
+    //4. Own element print in array function------>
+    myArray.prototype.print = function(){
+        let arr1 = new Array();
+        // return arr1
+        for(let i=0;i<this.length;i++){
+            arr1.push(this[i])
+        }
+        // console.log(arr1);
+        return arr1;
+    }
+    console.log("One line array:",arr.print())
+
+
+
+
+    // 5. Own reverse array----->
+    myArray.prototype.reverse=function(){
+        let arr2=new Array();
+        let l=this.length
+        for(let i=l-1;i>=0;i--){
+            arr2.push(this[i])
+        }
+        return arr2;
+    }
+console.log("ReverseArray:",arr.reverse())
+
+
+
+
+
+    //6. Own return Size return function------>
+    myArray.prototype.size=function(){
+        return this.length;
+    }
+    console.log("Stack length:",arr.size())
+
+
+
+
+    // console.log(arr)                 // return object
+    // console.log(Object.keys(arr))    //return key
+    console.log("After push & pop = Main Array:",Object.values(arr))     //return array
+
+</script>
